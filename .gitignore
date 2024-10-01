@@ -1,3 +1,5 @@
 # Exclude Virtualenv from repo
 virtualenv/
 __pycache__/
+htmlcov/
+.coverage
