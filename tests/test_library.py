@@ -11,9 +11,6 @@ class TestLibrary(unittest.TestCase):
         self.library = library.Library()
         with open('tests_data/ebooks.txt', 'r') as source:
             self.books_data = json.loads(source.read())
-        self.library.api.get_ebooks = Mock(return_value=self.books_data)
-        self.library.db.
-        
 
     def test_is_ebook_return_true(self):
         self.assertTrue(self.library.is_ebook('Aprendendo Python'))
