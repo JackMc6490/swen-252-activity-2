@@ -11,6 +11,7 @@ class TestLibrary(unittest.TestCase):
         self.library = library.Library()
         with open('tests_data/ebooks.txt', 'r') as source:
             self.books_data = json.loads(source.read())
+        self.library.api.get_ebooks = Mock(return_value=self.books_data)
 
     def test_is_ebook_return_true(self):
         self.assertTrue(self.library.is_ebook('Aprendendo Python'))
@@ -32,6 +33,11 @@ class TestLibrary(unittest.TestCase):
     def test_get_languages_for_book(self):
         self.library.api.get_book_info = Mock(return_value=[{'language': 'a'}])
         self.assertEqual(self.library.get_languages_for_book('Aprendendo Python'),{'a'})
+
+    def test_is_patron_registered_true(self):
+        testpatron = patron.Patron("Billy","Bob",12,"bb12")
+        self.library.db.retrieve_patron = Mock(return_value=testpatron)
+        self.assertTrue(self.library.is_patron_registered(testpatron))
 
 
         
