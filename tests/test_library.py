@@ -11,16 +11,19 @@ class TestLibrary(unittest.TestCase):
         self.library = library.Library()
         with open('tests_data/ebooks.txt', 'r') as source:
             self.books_data = json.loads(source.read())
-        self.library.api.get_ebooks = Mock(return_value=self.books_data)
+   
 
     def test_is_ebook_return_true(self):
+        self.library.api.get_ebooks = Mock(return_value=self.books_data)
         self.assertTrue(self.library.is_ebook('Aprendendo Python'))
 
     def test_is_ebook_return_false(self):
+        self.library.api.get_ebooks = Mock(return_value=self.books_data)
         self.assertFalse(self.library.is_ebook('War and Peace'))
 
     def test_get_ebooks_count(self):
-        self.assertEqual(self.library.get_ebooks_count('Aprendendo Python'), 8)
+        self.library.api.get_ebooks = Mock(return_value=[{'title': 'Aprendendo Python', 'ebook_count': 3},{'title': 'Aprendendo Python', 'ebook_count': 4}])
+        self.assertEqual(self.library.get_ebooks_count('Aprendendo Python'), 7)
 
     def test_is_book_by_author_true(self):
         self.library.api.books_by_author = Mock(return_value={'Aprendendo Python','War and Peacse'})
