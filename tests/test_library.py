@@ -6,17 +6,21 @@ from library import patron
 import json
 
 class TestLibrary(unittest.TestCase):
-
+    
     def setUp(self):
         self.library = library.Library()
         with open('tests_data/ebooks.txt', 'r') as source:
             self.books_data = json.loads(source.read())
    
 
+    #is_ebook() tests
+
+    #Testing is_ebook() w/ book in test data
     def test_is_ebook_return_true(self):
         self.library.api.get_ebooks = Mock(return_value=self.books_data)
         self.assertTrue(self.library.is_ebook('Aprendendo Python'))
 
+    #Testing is_ebook() w/ book not in test data
     def test_is_ebook_return_false(self):
         self.library.api.get_ebooks = Mock(return_value=self.books_data)
         self.assertFalse(self.library.is_ebook('War and Peace'))

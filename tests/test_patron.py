@@ -29,7 +29,7 @@ class TestPatron(unittest.TestCase):
         count = 0
         for book in self.patron.get_borrowed_books():
             if(book == 'the giving tree'):
-                count+=1;
+                count+=1
         self.assertEqual(count,1)
 
         
