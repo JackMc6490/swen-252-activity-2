@@ -79,7 +79,7 @@ class TestBooksAPI(unittest.TestCase):
         result = self.books_api.books_by_author(book)
 
         # Assert
-        self.assertEquals(result, [])
+        self.assertEqual(result, [])
 
 
     def test_books_by_author(self):
@@ -116,7 +116,7 @@ class TestBooksAPI(unittest.TestCase):
         result = self.books_api.get_book_info(book)
 
         # Assert
-        self.assertEquals(result, [])
+        self.assertEqual(result, [])
 
     def test_get_book_info_no_results(self):
         # Setup
