@@ -12,6 +12,10 @@ class TestLibrary(unittest.TestCase):
         self.library = library.Library()
         with open('tests_data/ebooks.txt', 'r') as source:
             self.books_data = json.loads(source.read())
+
+    #Closes the db after every test to prevent a warning
+    def tearDown(self):
+        self.library.db.close_db()
    
 
     #is_ebook() tests
