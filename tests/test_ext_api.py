@@ -21,6 +21,7 @@ class TestBooksAPI(unittest.TestCase):
             return response
         requests.get = mock_get
         requests.Response.json = (lambda self: self._content["json"])
+        self.books_api = EAI.Books_API()
 
     
         
@@ -69,6 +70,18 @@ class TestBooksAPI(unittest.TestCase):
         # Assert
         self.assertTrue(result)
 
+    def test_books_by_author_bad_json(self):
+        # Setup
+        book = "Harry Potter and the Sorcerer's Stone"
+        self.books_api.make_request = Mock(return_value=None)
+
+        # Invoke
+        result = self.books_api.books_by_author(book)
+
+        # Assert
+        self.assertEquals(result, [])
+
+
     def test_books_by_author(self):
         # Setup
         author = "Ray Bradbury"
@@ -93,6 +106,17 @@ class TestBooksAPI(unittest.TestCase):
         self.assertEqual(result[0]['title'], "The Great Gatsby")
         self.assertIn('Macmillan Pub. Co.', result[0]['publisher'])
         self.assertIn(1925, result[0]['publish_year'])
+    
+    def test_get_book_info_bad_json(self):
+        # Setup
+        book = "The Great Gatsby"
+        self.books_api.make_request = Mock(return_value=None)
+
+        # Invoke
+        result = self.books_api.get_book_info(book)
+
+        # Assert
+        self.assertEquals(result, [])
 
     def test_get_book_info_no_results(self):
         # Setup
@@ -129,5 +153,14 @@ class TestBooksAPI(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(result), 0)
+        self.assertEqual(result, [])
+    
+    def test_get_ebooks_bad_json(self):
+        # Setup
+        self.books_api.make_request = Mock(return_value=None)
+        # Invoke
+        result = self.books_api.get_ebooks("The Great Gatsby")
+
+        # Assert
         self.assertEqual(result, [])
 
