@@ -23,6 +23,7 @@ class TestLibrary_DB(unittest.TestCase):
         TinyDB.__init__ = Mock(return_value=None)
         TinyDB.close = Mock()
         self.db_interface = library_db_interface.Library_DB()
+        TinyDB.__init__.assert_called_with("db.json")
         
     def tearDown(self):
         self.db_interface.close_db()
