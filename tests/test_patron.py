@@ -3,6 +3,7 @@ from unittest.mock import Mock
 from unittest.mock import MagicMock
 from library import patron
 import json
+import re
 
 class TestPatron(unittest.TestCase):
 
@@ -11,10 +12,25 @@ class TestPatron(unittest.TestCase):
         self.patron = patron.Patron("John","Doe",67,30)
         self.patron.add_borrowed_book('The Giving Tree')
 
+
+    def test_creation(self):
+        re.search = Mock(return_value=False)
+        patron2 = patron.Patron("Jane","Doe",67,30)
+        re.search.assert_any_call('\d',"Jane")
+        re.search.assert_any_call('\d',"Doe")
+
+        
     #Test to confirm you can't have numbers in a patrons name
-    def test_invalid_name(self):
+    def test_invalid_name_first_has_numbers(self):
         try:
             badpatron = patron.Patron("Bob123","Jones",21,137)
+            return False
+        except:
+            return True
+        
+    def test_invalid_name_both_have_numbers(self):
+        try:
+            badpatron = patron.Patron("Bob123","Jones123",21,137)
             return False
         except:
             return True
