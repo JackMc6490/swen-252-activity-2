@@ -70,6 +70,16 @@ class TestBooksAPI(unittest.TestCase):
         # Assert
         self.assertTrue(result)
 
+    def test_is_book_available_only_one_result(self):
+        # Setup
+        book = "Shmost The Ghost"
+
+        # Invoke
+        result = self.books_api.is_book_available(book)
+
+        # Assert
+        self.assertTrue(result)
+
     def test_books_by_author_bad_json(self):
         # Setup
         book = "Harry Potter and the Sorcerer's Stone"
@@ -103,6 +113,11 @@ class TestBooksAPI(unittest.TestCase):
 
         # Assert
         self.assertGreater(len(result), 0)
+        # Publisher, Publish date, and language EXISTS
+        self.assertTrue('language' in result[0])
+        self.assertTrue('publisher' in result[0])
+        self.assertTrue('publish_year' in result[0])
+
         self.assertEqual(result[0]['title'], "The Great Gatsby")
         self.assertIn('Macmillan Pub. Co.', result[0]['publisher'])
         self.assertIn(1925, result[0]['publish_year'])
@@ -127,6 +142,7 @@ class TestBooksAPI(unittest.TestCase):
 
         # Assert
         self.assertEqual(len(result), 0)
+
 
     def test_is_book_available_no_results(self):
         # Setup
@@ -154,6 +170,15 @@ class TestBooksAPI(unittest.TestCase):
         # Assert
         self.assertEqual(len(result), 0)
         self.assertEqual(result, [])
+
+    def test_get_ebooks_one_result(self):
+        # Setup
+        # Invoke
+        result = self.books_api.get_ebooks("The princess and the goblin")[0]
+        # Assert
+        self.assertTrue("title" in result)
+        self.assertTrue("ebook_count" in result)
+        self.assertEqual(result["ebook_count"], 1)
     
     def test_get_ebooks_bad_json(self):
         # Setup
