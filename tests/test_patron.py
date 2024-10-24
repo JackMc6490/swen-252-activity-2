@@ -17,6 +17,7 @@ class TestPatron(unittest.TestCase):
         re.search = Mock(return_value=False)
         patron2 = patron.Patron("Jane","Doe",67,30)
         re.search.assert_any_call('\d',"Jane")
+        re.search.assert_any_call('\d',"Doe")
         
     #Test to confirm you can't have numbers in a patrons name
     def test_invalid_name(self):
