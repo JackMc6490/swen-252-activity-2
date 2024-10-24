@@ -34,6 +34,12 @@ class TestPatron(unittest.TestCase):
             return False
         except:
             return True
+        
+    def test_exception_is_correct(self):
+        with self.assertRaises(Exception) as cm:
+            badpatron = patron.Patron("Bob123","Jones123",21,137)
+        self.assertEqual(str(cm.exception), "Name should not contain numbers")
+
 
     #Testing borrowing a book
     def test_add_borrowed_book(self):
