@@ -18,11 +18,19 @@ class TestPatron(unittest.TestCase):
         patron2 = patron.Patron("Jane","Doe",67,30)
         re.search.assert_any_call('\d',"Jane")
         re.search.assert_any_call('\d',"Doe")
+
         
     #Test to confirm you can't have numbers in a patrons name
-    def test_invalid_name(self):
+    def test_invalid_name_first_has_numbers(self):
         try:
             badpatron = patron.Patron("Bob123","Jones",21,137)
+            return False
+        except:
+            return True
+        
+    def test_invalid_name_both_have_numbers(self):
+        try:
+            badpatron = patron.Patron("Bob123","Jones123",21,137)
             return False
         except:
             return True
